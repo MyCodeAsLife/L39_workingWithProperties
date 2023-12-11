@@ -11,7 +11,7 @@ namespace L39_workingWithProperties
     {
         static void Main(string[] args)
         {
-            char playerIcon1 = '@';     // Фифра 1 в названии потому как заранее неизвестно какие иконки будут подгруженны из файла
+            char playerIcon1 = '@';
             char playerIcon2 = '$';
 
             int playerPositionX = 12;
@@ -26,52 +26,35 @@ namespace L39_workingWithProperties
 
         class Player
         {
-            private int _positionX;
-            private int _positionY;
-            private char _icon;
-
             public Player(char icon, int positionX = 0, int positionY = 0)
             {
                 SetPosition(positionX, positionY);
                 SetIcon(icon);
             }
 
-            public int PositionX
-            {
-                get
-                {
-                    return _positionX;
-                }
-            }
+            public int PositionX { get; private set; }
 
-            public int PositionY
-            {
-                get
-                {
-                    return _positionY;
-                }
-            }
+            public int PositionY { get; private set; }
 
-            public char Icon
-            {
-                get
-                {
-                    return _icon;
-                }
-            }
+            public char Icon { get; private set; }
 
             private void SetPosition(int positionX, int positionY)
             {
-                if (positionX >= 0)
-                    _positionX = positionX;
+                if (IsCorrectPosition(positionX))
+                    this.PositionX = positionX;
 
-                if (positionY >= 0)
-                    _positionY = positionY;
+                if (IsCorrectPosition(positionY))
+                    this.PositionY = positionY;
             }
 
             private void SetIcon(char icon)
             {
-                _icon = icon;
+                Icon = icon;
+            }
+
+            private bool IsCorrectPosition(int position)
+            {
+                return position >= 0;
             }
         }
 
