@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,8 @@ namespace L39_workingWithProperties
             Player player1 = new Player(playerIcon1);
             Player player2 = new Player(playerIcon2, playerPositionX, playerPositionY);
 
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(player1.PositionX, player1.PositionY);
-            Console.WriteLine(player1.Icon);
-
-            Console.SetCursorPosition(player2.PositionX, player2.PositionY);
-            Console.WriteLine(player2.Icon);
+            Renderer.WritePlayer(player1);
+            Renderer.WritePlayer(player2);
         }
 
         class Player
@@ -35,13 +32,8 @@ namespace L39_workingWithProperties
 
             public Player(char icon, int positionX = 0, int positionY = 0)
             {
-                if (positionX > 0)      // Не ставлю равно, потому как поля изначально проинициализированны нулем
-                    _positionX = positionX;
-
-                if (positionY > 0)
-                    _positionY = positionY;
-
-                _icon = icon;
+                SetPosition(positionX, positionY);
+                SetIcon(icon);
             }
 
             public int PositionX
@@ -49,11 +41,6 @@ namespace L39_workingWithProperties
                 get
                 {
                     return _positionX;
-                }
-                private set
-                {
-                    if (value >= 0)
-                        _positionX = value;
                 }
             }
 
@@ -63,11 +50,6 @@ namespace L39_workingWithProperties
                 {
                     return _positionY;
                 }
-                private set
-                {
-                    if (value >= 0)
-                        _positionY = value;
-                }
             }
 
             public char Icon
@@ -76,10 +58,30 @@ namespace L39_workingWithProperties
                 {
                     return _icon;
                 }
-                private set
-                {
-                    _icon = value;
-                }
+            }
+
+            private void SetPosition(int positionX, int positionY)
+            {
+                if (positionX >= 0)
+                    _positionX = positionX;
+
+                if (positionY >= 0)
+                    _positionY = positionY;
+            }
+
+            private void SetIcon(char icon)
+            {
+                _icon = icon;
+            }
+        }
+
+        class Renderer
+        {
+            public static void WritePlayer(Player player)
+            {
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(player.PositionX, player.PositionY);
+                Console.WriteLine(player.Icon);
             }
         }
     }
